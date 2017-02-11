@@ -1,0 +1,61 @@
+#En este archivo se incluye el número de veces que se realizaron observaciones
+#en los sondeos atmosfércos realizados en El Paso, Texas
+
+Número de observaciones en el 2016 a las 00Z
+    362    3620   23168
+Número de Observaciones en el 2016 a las 12Z
+    364    3640   23296
+Número de observaciones por mes el 2016 a las 00Z
+
+Enero
+     31     310    1984
+Febrero
+     27     270    1728
+Marzo
+     31     310    1984
+Abril
+     30     300    1920
+Mayo
+
+     31     310    1984
+Junio
+     29     290    1856
+Julio
+     31     310    1984
+Agosto
+     30     300    1920
+Septiembre
+     30     300    1920
+Octubre
+     31     310    1984
+Noviembre
+     30     300    1920
+Diciembre
+     31     310    1984
+
+Número de observaciones por mes el 2016 a las 12Z
+
+Enero
+     31     310    1984
+Febrero
+     28     280    1792
+Marzo
+     31     310    1984
+Abril
+     30     300    1920
+Mayo
+     31     310    1984
+Junio
+     29     290    1856
+Julio
+     31     310    1984
+Agosto
+     31     310    1984
+Septiembre
+     30     300    1920
+Octubre
+     31     310    1984
+Noviembre
+     30     300    1920
+Diciembre
+     31     310    1984
