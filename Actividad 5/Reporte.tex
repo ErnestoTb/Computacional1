@@ -1,0 +1,292 @@
+\include{preamble}
+\date{12 de Abril del 2017}
+\begin{document}
+
+\begin{titlepage}
+
+    \begin{figure}[ht!]
+    \centering
+    \includegraphics[scale = 0.25]{logo}
+    
+    \textbf{UNIVERSIDAD DE SONORA \\ DIVISIÓN DE CIENCIAS EXACTAS Y NATURALES \\ DEPARTAMENTO DE FÍSICA \\ LICENCIATURA EN FÍSICA}
+	\maketitle
+    \hrule \bigskip
+    \large{Física Computacional I}\\
+	Profr. Carlos Lizárraga Celaya
+    \end{figure}
+\thispagestyle{empty}
+
+
+\end{titlepage}
+
+\newpage
+
+\begin{center}
+\huge{\textbf{\textsc{Mareas y Corrientes}}}
+\end{center}
+
+El área de estudio de la física es todo lo que existe en la naturaleza, en nuestro planeta contamos con bastantes áreas de interés, como el estudio de la superficie terrestre, la atmósfera, interior de la tierra o bien los océanos. Estos últimos son bastante importantes ya que conforman la mayor parte de nuestro planeta. Un punto de interés en los océanos es lo que sucede con respecto al comportamiento de este fluido ya sea en las costas o en el océano profundo.
+
+Para el estudio del océano contamos con distintas características que nos permiten describir su comportamiento físico, en esta ocasión las mareas y las corrientes. Para estudiar estos fenómenos del océano deberíamos saber sus causas y efectos. El interés del estudio de las corrientes y mareas es por la influencia que tienen en la vida de las personas, pues tienen impacto en la alimentación, el transporte, recreación, etc.
+
+\section{Mareas}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{monterey-peninsula}
+  \end{center}
+  \caption{Costa de Monterey, CA.}
+\end{wrapfigure}
+Las mareas son un fenómeno del aumento y la disminución del nivel del mar de ocurrido por la combinación de efectos gravitacionales ejercidas por la luna y el sol, además de la rotación de la Tierra. 
+
+El tiempo y amplitud en la que se presente la marea son influenciads por el sol, la luna,  el patrón de mareas en el oceano profundo, la forma de las líneas costeras y la batimetría de las costas, entre otros. Las mareas varían en rangos que van desde horas hasta años, esto por diversos factores. 
+
+Aunque la marea es la principal fuente del aumento temporal del nível del mar, también existen diversos factores que lo crean, como el viento o cambios en la presión barométrica.
+
+\subsection{Características}
+Las mareas cambian debido a las siguientes situaciones:
+
+\begin{description}
+\item[Pleamar:] el nivel del mar se eleva por varias horas, cubriendo la zona entre mareas.
+\item[Marea alta:] el agua se eleva al nivel más alto.
+\item[Reflujo:] el nivel del mar baja durante varias horas, dejando visible la zona intermareal.
+\item[Marea baja:] el agua deja de bajar y lega hasta su valor mínimo.
+\end{description}
+
+La oscilación de las corrientes producidas por las mareas son conocidas como corrientes de marea. Al momento en el que el las corrientes de mareas se detienen se le llama agua floja. Las mareas se presentan principalmente como diurnas o semi-diurnas; las mareas más altas presentes en un día son diferentes, lo mismo sucede con los niveles bajos y se relaciona con la posición de la luna sobre el ecuador.
+
+\subsubsection{Definiciones de las mareas según los niveles de estas}
+
+De mayor a menor se pueden ordenar a las corrientes como sigue:
+
+\begin{itemize}
+\item Marea astronómica más alta (HAT, por sus siglas en inglés): es la marea más alta, la cual se puede predecir.
+\item Mareas de sicigia de altura media (MHWS), el promedio de las dos mareas altas presentadas en los días de mareas de sicigia. \footnotesize\footnote{Las mareas de sicigia son las que se presentan cuando el sol, la luna y la tierra se alinean, resultando mayor la fuerza de atracción gravitacional}
+\item Mareas muertas de altura media (MHWN), es el promedio de las mareas más altas en días de marea muerta.
+\item Nivel del mar medio (MSL) Este es el promedio del nivel del mar.
+\item Mareas muertas de altura baja (MLWN), es el promedio de las dos mareas más bajas de los días de marea muerta.
+\item Mareas de sicigia de nivel bajo (MLWS), es el promedio de las dos mareas más bajas presentadas en días de cisigia.
+\item Marea astronómica más baja (LAT), es la marea más baja que puede predecirse de ocurrir.
+\end{itemize}
+
+\subsection{Componentes de las mareas}
+Las componentes de las mareas son el resultado de la combinación de sucesos que generan cambios en la marea durante ciertos periodos de tiempo; las principales componentes son debido a la rotación de la tierra, la posición de la luna y elsol relativas a la tierra. Las variaciones que duran menos de medio día son conocidas como \textit{componentes armónicos}, por otro lado, a los ciclos que toman días, meses o años son componentes de \textit{periodos largos}.
+
+En la mayoría de los lugares la principal componente es la componente principal lunar semidiurna, también conocida como la componente $M_2$ de la marea. su periodo es de alrededor de las $12$ horas y $25.2$ minutos, exactamente la mitad de la marea lunar diaria. Debido al campo gravitacional de la luna se generan las mareas de este tipo, debido a la rotación de la Tierra, la magnitud y dirección e la fuerza cambia, afectando así a las mareas. Si se presentan dos mareas altas  y dos bajas por día con diferentes alturas, se le conoce a este patrón como \textit{marea semidiurna combinada}
+
+Las variaciones del rango de las mareas está dado por la posición de la luna y el sol relativos a la Tierra, bajo estas condiciones se puede hablar de mareas vivas o de sicigia y mareas muertas, las primeras se presentan cuando la luna, la tierra y el sol se alinean y existe un aumento en la altura de las mareas, siendo durante los días en que se presenta la alineación una marea más alta que lo normal. Para las mareas muertas sucede lo contrario, en este caso la luna y el sol se encuentran en líneas perpendiculares a la tierra, en esta ocasión las mareas son más moderadas, pues la gravedad del sol y de la luna se contrarrestan y hacen que las mareas bajen su nivel a uno más bajo que lo habitual para las mareas altas normales.
+
+\subsection{Física de las mareas}
+la investigación sobre la física de las mareas no es cuestión de los últimos siglos, sino que ha sido un tema de interés que ha llamado la atención de gran cantidad de pensadores durante gran parte de la historia. Desde el año 150 a.e.c. Seleucus de Seleucia había teorizado que las mareas se debían a la Luna. Esta idea fue evolucionando con el tiempo llevando a pensar que las mareas se ven influenciadas también por la posición de la luna y el sol.
+
+Incluso Kepler y Galileo dieron explicaciones sobre las mareas, siendo Kepler el que más se aproximaba, de entre ellos dos, a la realidad pues consideraba que la fuerza de atracción de la luna generaba las mareas. Isaac Newton fue la primer persona en lograr explicar a las mareas como el producto de la interacción gravitacional, usando la teoría de la gravitación universal logró explicar los efectos de la atracción gravitatoria de la luna y el sol.
+
+Pierre-Simon Laplace formuló un sistema de ecuaciones diferenciales parciales que relacionan el flujo horizontal de los océanos con la altura de la superficie del agua. Estas ecuaciones a un son utilizadas.
+
+\subsubsection{Fuerzas}
+La fuerza  de marea es la fuerza resultante por la fuerza gravitacional que experimenta una partícula debido a los cuerpos masivos (la luna o el sol) y a la fuerza gravitacional que ejerce la tierra y la fuerza que experimenta debido a la fuerza de gravedad en la tierra. La influencia de la luna en las mareas es mayor debido a la distancia de la tierra al sol, siendo en este caso en el que el campo potencial asociado al sol es menor que el de la luna, esto para las mareas. En general las fuerzas de mareas debido a la luna generan una mayor aceleración sobre las mareas.
+
+Los campos gravitacionales de cuerpos masivos afectan a la forma de la tierra, la rotación de la tierra relativa a esta deformación de la tierra genera el ciclo de mareas diario. A pesar de que las fuerzas gravitacionales dependen inversamente del cuadrado de la distancia a los objetos que generan un campo gravitacional, sin embargo las fuerzas de mareas son inversamente proporcionales el cubo de la distancia.
+
+\subsubsection{Ecuaciones de las mareas de Laplace}
+La profundidad de los océanos es mucho menor comparada con su extensión horizontal, por esto, el resultado de las fuerzas de mareas se pueden modelar usando las ecuaciones para mareas de Laplace, las cuales incorporan las siguientes características: la velocidad vertical es insignificante, las fuerzas solo son horizontales, el efecto Coriolis como una fuerza no inercial actuando de forma lateral a la dirección del flujo y proporcional a la velocidad, la razón de cambio de la altura de la superficie es proporcional al negativo de la divergencia de la velocidad multiplicado por la profundidad.
+
+\subsubsection{Amplitud y tiempo del ciclo}
+La amplitud de las mareas oceánicas provocadas por la luna son teóricamente de 54 centímetros, en su punto más alto, esto si el océano tuviera una profundidad uniforme, no habría masas de tierra y la tierra estuviera rotando al paso de la órbita de la luna. El sol también causa mareas en las cuales la amplitud teórica sería de 25 centímetros. Durante las mareas vivas  aumentarían a  79 y 29 centímetros, respectivamente. Las mareas debido al sol presentarían un ciclo de 12 horas.
+
+Las amplitudes reales difieren considerablemente de esto, no solo por las variaciones de la profundidad y los obstáculos continentales, sino también por la propagación de ondas a través del océano, que tienen un periodo natural del mismo orden de magnitud que el periodo de rotación.
+
+\subsubsection{Batimetría}
+La forma de las costas y el fondo oceánico cambia la forma en que las ondas se propagan, la batimetría de aguas profundas así como la forma de la línea costera de lugar específico afectan la previsión de las mareas. Sin embargo, la posición de la luna con respecto a este lugar será previsible, al igual que el tiempo en el que se presente marea baja y alta. 
+
+Las masas de tierra y las cuencas oceánicas actúan como barreras para el movimiento libre del agua alrededor del planeta, afectando también las formas y el tamaño de las frecuencias de las mareas, como resultado el patrón de mareas varía.
+
+\subsection{Observación y predicción}
+A lo largo de la historia se han buscado encontrar patrones, explicaciones y modelos para lograr predecir las mareas. La generación de tablas sobre las mareas y las observaciones basadas en las causas de las mareas han sido estrategias para lograr generar un modelo que pueda predecir mareas. Algunos de los análisis de las mareas ha sido a partir de un análisis armónico.
+
+\subsubsection{Tiempo}
+Las fuerzas de mareas debidas a la luna o al sol generan ondas muy largas que viajan a través del océano, al tiempo en que las crestas llegan a la costa nos dice el tiempo en el cual se presenta marea alta. El tiempo en que tardan en viajar las ondas en viajar da información sobre los retrasos entre las fases lunares y los efectos sobre las mareas.
+
+\subsubsection{Análisis}
+El análisis de las mareas a partir de un modelo de fuerzas como el proporcionado por Newton logra explicar el por qué se presentan dos mareas al día, sin embargo se puede lograr predecir una onda con bastante detalle, basándose en las fuerzas astronómicas presentes. Sin embargo para resultados precisos se requiere tener conocimiento detallado de la forma de las cuencas oceánicas y las líneas costeras.
+
+El procedimiento actual es a partir del método de análisis armónico introducido en 1860 por William Thompson. Este método se basa en el principio de que las mareas son causadas por efectos gravitacionales. Existen una gran cantidad de frecuencias establecidas y amplitudes relacionadas a los armónicos provocadas por el sol y la luna; para cada localidad existen valores determinados, pues estas dependen principalmente de la región.
+
+Los principales patrones que se dan en las mareas son las variaciones dobles que se presentan en el día, las diferencias entre la primera y la segunda marea del día, el ciclo de marea muerta y marea viva, así como la variación anual.
+
+Debido a que las mareas presentan variaciones periódicas, las series de Fourier son una forma de análisis que ayudan a analizar las frecuencias de los ciclos fundamentales y los armónicos de las frecuencias fundamentales.
+
+Para el análisis de las alturas, la aproximación por medio de las series de Fourier son más elaboradas que utilizar una simple frecuencia y sus armónicos. En realidad se utilizan varias frecuencias fundamentales y sus diferentes armónicos.
+
+El estudio de las alturas de la marea a partir del análisis amónico comenzó con Laplace. William Thompson (Lord Kelvin), George Darwin y A.T. Doodson extendieron el trabajo de Laplace, su aproximación ha sido el estándar para la modelación de mareas. En general, el modelo se basa en una serie de senos y cosenos en los cuales los coeficientes de cada coseno son los armónicos o amplitudes para las mareas que se presentan con distintas frecuencias.
+
+\subsubsection{¿Cómo se calculan?}
+Debido al movimiento de la luna alrededor de la tierra se encuentran periodos para las dos mareas altas y bajas del día de 12.4206 horas, aproximadamente, en general las dos mareas altas se presentan de diferentes alturas.
+
+La alineación de el sol, la Tierra y la luna, debido a los efectos gravitacionales de la luna y el sol, representa un factor importante para el tipo de mareas que se presenta y la altura que estas tienen, pues cuando los tres se encuentran sobre una línea se presentan las mareas de sicigia. Cuando se encuentra el sol y la luna, sobre líneas perpendiculares que pasan por la tierra entonces se presenta la marea muerta, que es cuando los efectos gravitacionales se ven contrarrestados. 
+
+\subsubsection{Corrientes}
+Las corrientes influyen en las mareas de cierta forma, sin embargo calcular y medir la aportación de las corrientes marinas al nivel del mar es bastante complicado. A diferencia de las mareas que son mediciones sobre un número, que es la altura del mar, la corriente incluye direcciones sobre la información de el sentido del flujo de agua.
+Otro factor que complica el análisis considerando las mediciones de corriente es que éstas se ven influenciadas por cuestiones climáticas, que las afectan en gran medida.
+
+\subsubsection{Generación de energía}
+A partir de las mareas se puede obtener energía, esto se hace mediante turbinas de agua que son colocadas bajo una corriente de marea, o bien mediante una turbina que ingresa y libera agua a través de una turbina. Existen impedimentos para la obtención de la energía a partir de las mareas, pues si se colocan turbinas en las mejores corrientes se obstruiría al paso de barcos y las represas de contención son costosas e interrumpen el estado natural de las mareas y la navegación también se ve afectada.
+
+\pagebreak
+\subsection{Navegación}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+\centering
+\includegraphics[width = 0.5\textwidth]{ensenada}
+\caption{Puerto de Ensenada, B.C., Méx.}
+\end{wrapfigure}
+
+El conocimiento sobre las mareas ha sido fundamental para la navegación tanto en el mar como en ríos, pues para que los barcos puedan navegar se necesita la marea suficiente para que estos permanezcan a flote y no choquen con fondos al encontrarse en mareas bajas cerca de las costas o bien en donde el fondo oceánico se encuentra muy por encima de lo regular, esto evita que muchos barcos se hundan. El conocimiento sobre las mareas ha sido esencial para los oficiales navales, ahora se utilizan sistemas automatizados de navegación.
+
+\subsection{Teoría de las mareas}
+Como se mencionó anteriormente, existe un modelo basado en un análisis de Fourier que ayuda a estudiar el comportamiento de la marea de acuerdo a la altura y frecuencia en la que se presentan. Debido a los periodos que tarda en repetirse cada tipo de marea, de acuerdo a la presencia de la luna o el sol en el cielo, además de la posición en la que se encuentra, se tienen clasificaciones para los tipos de mareas. Las diez principales mareas según la clasificación de la Administración Nacional Atmosférica y Oceánica (NOAA, por sus siglas en inglés) de Estados Unidos, son las que se presentan en la tabla \ref{mareaNOAA}, en la cual también se presenta la clasificación de acuerdo a la simbología de Darwin
+
+\begin{table}[ht!]
+\centering
+\caption{Tabla de clasificación de los cosntituyentes armónicos de las mareas y sus respectivos periodos}
+\label{mareaNOAA}
+\begin{tabular}{|c|l|l|c|}
+\hline
+\textbf{\begin{tabular}[c]{@{}c@{}}Orden\\ NOAA\end{tabular}} & \textbf{Especies de Armónicos} & \textbf{Periodo {[}Hrs.{]}} & \textbf{\begin{tabular}[c]{@{}c@{}}Símbología \\ Darwin\end{tabular}} \\ \hline
+1 & Lunar principal semidiurno & 12.4206012 & $M_2$ \\ \hline
+2 & Solar principal semidiurno & 12 & $S_2$ \\ \hline
+3 & Lunar largo elíptico semidiurno & 12.65834751 & $N_2$ \\ \hline
+4 & Lunar diurno & 23.93447213 & $K_1$ \\ \hline
+5 & \begin{tabular}[c]{@{}l@{}}Lunar principal de sobremareas\\ de aguas someras\end{tabular} & 6.210300601 & $M_4$ \\ \hline
+6 & Lunar diurno & 25.81933871 & $O_1$ \\ \hline
+7 & \begin{tabular}[c]{@{}l@{}}Lunar principal para sobremareas \\ de aguas someras\end{tabular} & 4.140200401 & $M_6$ \\ \hline
+8 & Terdiurno de aguas someras & 8.177140247 & $MK_3$ \\ \hline
+9 & \begin{tabular}[c]{@{}l@{}}Solar principal de sobremareas\\  de aguas someras\end{tabular} & 6 & $S_4$ \\ \hline
+10 & Cuatridiurno de aguas someras & 6.269173724 & $MN_4$ \\ \hline
+\end{tabular}
+\end{table}
+\pagebreak
+En la tabla \ref{mareaNOAA} se presenta el término de sobremareas, este hace referencia a los armónicos que corresponden a las componentes de las mareas que tienen una frecuencia más alta.
+
+\pagebreak
+
+\newpage
+
+\section{Datos sobre mareas obtenidos estaciones}
+
+Las estaciones encargadas de registrar datos sobre el estado de las mareas que se presentan en zonas costeras de ciertas regiones ayudan a tener un registro sobre la actividad marítima de la zona y a establecer relaciones con respecto a los fenómenos meteorológicos que acontecen. Una aportación importante sobre el conocimiento de las mareas ayuda a ver los periodos y amplitudes en los que se presentan las mareas, además de que con esto se pueden hacer predicciones sobre las próximas mareas que se presenten.
+
+Existen organismos que se encargan de recopilar información de las mareas que se presentan en distintos lugares, estas mediciones son hechas por estaciones que se encuentran en las zonas que son estudiadas. En México el Centro de Investigación Científica y de Educación Superior de Ensenada se encarga de recopilar esta información con el fin de ayudar a realizar predicciones sobre las mareas, ofrece los datos de la altura medida, mostrando información como la fecha y hora en la que se realizó el registro de los datos, esto puede ser de uso para personas que se encargan de estudiar y analizar el comportamiento de las mareas.
+
+Con los datos que se obtienen sobre las mareas se pueden realizar gráficas del nivel del mar con respecto al tiempo, es decir un análisis de cómo se presenta la marea en el período del tiempo que se hizo el registro. En la figura \ref{marensenada11} se presenta la visualización gráfica de los datos sobre las mareas registradas en Ensenada, Baja California, México, a partir de los datos obtenidos de CICESE en \url{http://predmar.cicese.mx/calendarios/}. \footnotesize\footnote{Debido a que los datos para el nivel del mar proporcionados por el CICESE están en milimetros se debe realizar una conversión a metros.}
+
+La Administración Nacional Oceánica y Atmosférica de Estados Unidos (NOAA) cuenta con una división encargada de la oceanografía, el Centro de Productos y Servicios para la Oceanografía Operacional (CO-OPS), es un organismo encargado, al igual que el CICESE de recopilar información sobre las mareas que se presentan en costas, ríos y lagos de Estados unidos. Del sitio oficial se pueden obtener datos sobre las mareas registradas por una gran variedad de estaciones ubicadas alrededor de estados unidos.
+
+El CO-OPS ofrece también información sobre las mareas. Se habla de las  mareas como un fenómeno causado por las fuerzas gravitacionales del sol y de la luna, principalmente. También se menciona que las mareas son como ondas con periodos muy largos que se mueven a través de los océanos. También menciona las frecuencias de las mareas y que estas se relacionan con la posición de la luna y el tiempo que tarda en volver a estar en la misma posición. Algo que cabe destacar es que las mediciones que se hacen son a partir de instrumentos tecnológicos que emiten señales de audio que son enviados al fondo oceánico y al llegar a este son regresados a la superficie, midiendo el tiempo que tardan en viajar, a partir de esto se obtienen los datos sobre el nivel del mar.
+
+En la figura \ref{mtryNOAA} se presenta un análisis hecho a partir de los datos obtenidos del sitio oficial de CO-OPS, los cuales provienen de la estación de medición en Monterey, California (\url{https://tidesandcurrents.noaa.gov/waterlevels.html?id=9413450}). Estos datos son recolectados cada 6 minutos y presentan las mediciones de altura en metros.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width = 1\textwidth]{marensenada}
+\caption{Visualización de la marea presentada en el mes de enero, registrada en la estación en El Sauzal, Ensenada, Baja California. En la gráfica se puede apreciar claramente el comportamiento armónico de las mareas.}
+\label{marensenada11}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width = 1 \textwidth]{mareamtry}
+\caption{Marea presentada en Monterey California, según los datos obtenidos de la estación}
+\label{mtryNOAA}
+\end{figure}
+
+\pagebreak
+\newpage
+
+\section*{Conclusiones}
+Las mareas son un fenómenos provocado por efectos gravitacionales del sol y la luna, su estudio es de gran ayuda para conocer el comportamiento de las masas oceánicas, que son la mayor parte de la superficie de nuestro planeta. Gracias a los modelos del comportamiento de las mareas se puede tener una gran cantidad de predicciones sobre las mareas y también estudiar los efectos de otros factores como las condiciones climáticas y la geografía del lugar donde se estudia la marea.
+
+A lo largo de la historia se ha buscado explicar y entender el fenómeno de las mareas, llegando a modelos más precisos como el análisis armónico, pues como pudimos comprobar con los datos recolectados por CICESE y la NOAA (por parte de la división CO-OPS), las mareas se comportan como ondas con periodos muy largos, sin embargo este modelo requiere conocer las características de los armónicos en cada región, por lo que este es un modelo que aproxima muy bien a las observaciones reales de las mareas, sin embargo no es un modelo general que se pueda aplicar directamente sobre cualquier región del mundo, claro está que hay factores como la forma de la región que dificultan obtener un modelo más preciso.
+
+\nocite{mareas}
+\nocite{teotide}
+\nocite{cicese}
+\nocite{noaa}
+
+\newpage
+
+\section*{Apéndice I:  Construcción de gráficas en python a partir de los datos descargados sobre mareas}
+
+Para la construcción de las gráficas se utilizaron las bibliotecas de \textit{pandas} y \textit{matplotlib} de Python para leer, manejar y graficar los datos obtenidos de las páginas oficiales de CICESE y CO-OPS (de la NOAA), siendo El Sauzal, Ensenada, B.C. y Monterey, CA., las estaciones correspondientes, con las cuales se trabajaron las gráficas \ref{marensenada11} y \ref{mtryNOAA}. 
+
+La lectura de datos la realicé con\textit{pandas}. Después se debió realizar un cambio en el formato de la columna(s) (\textit{"Date"} para el caso de Monterey  o las columnas \textit{"Año, mes, día y hora"}) que contenía la fecha y hora de la medición. Para ello se utilizó el paquete datetime, para ayudar al paquete de pandas para el cambio de formato.  Gracias a esto se puede obtener la gráfica del nivel del mar contra el tiempo.
+
+Para obtener las gráficas se debe graficar la columna modificada que contiene la fecha y hora de cada medición, contra la columna que contiene los datos de la altura, ya sea en metros como la obtenida de CO-OPS o una conversión de los datos en milímetros ofrecidos por CICESE a metros.
+
+Las mediciones se obtuvieron cada 6 min y cada hora para Monterey y EL Sauzal, respectivamente. Por lo que para graficar un mes de datos se debe de tener esto en consideración. Además, los datos obtenidos para El Sauzal son los de un año, por lo que se debe de seleccionar un rango de fechas para graficar solamente esos días, esto se hace limitando el rango de los valores en el eje x, es decir, seleccionando el rango de fechas y horas de los que se quiere obtener la gráfica.
+\begin{verbatim}
+import pandas as pd
+import matplotlib.pylab as plt
+from datetime import datetime
+\end{verbatim}
+Lectura de datos para El Sauzal
+\begin{verbatim}
+df = pd.read_csv("szl_data.csv", names = ("Anio",
+"Mes", "dia", "Hora", "Altura" ), header = 0)
+
+df_cl= df.dropna()
+\end{verbatim}
+O bien para los datos de Monterey
+\begin{verbatim}
+df = pd.read_csv("Mtry_CA_wl.csv", names = ("Date Time", 
+"Water Level", "Sigma", "O", "F", "R", "L",
+"Quality"), header = 0)
+\end{verbatim}
+\textbf{Para dar formato a las fechas.}
+
+\textit{El Sauzal:}
+\begin{verbatim}
+df_cl['date']= df.apply(lambda x:
+datetime.strptime("{0} {1} {2}
+{3}".format(x[u'Anio'],x[u'Mes'], x[u'dia'],
+x[u'Hora']), "%Y %m %d %H"),axis=1)
+\end{verbatim}
+\textit{Monterey}
+\begin{verbatim}
+df['Date'] = pd.to_datetime(df["Date Time"], 
+format = '%Y %m %d %H:%M:')
+\end{verbatim}
+Graficar datos para El Sauzal:
+\begin{verbatim}
+y= df_cl['Altura']/1000 #Conversión a metros para el caso de El Sauzal
+plt.plot(df_cl['date'], y, label ="Altura")
+plt.xlim(pd.Timestamp('2016-01-01 00:00:00'), pd.Timestamp('2016-01-31 23:00:00')) 
+plt.ylabel('Altura de marea [m]')
+plt.xlabel('Día')
+plt.title('Marea registrada por la estación en El
+auzal, Ensenada durante Enero 2016')
+plt.grid(True) 
+
+fig = plt.gcf()
+fig.set_size_inches(20, 8) #tamaño del gráfico
+plt.show()
+\end{verbatim}
+Para Monterey
+\begin{verbatim}
+tides = plt.plot(df[u'Date'], df[u'Water Level'], 'g', label ="Altura")
+plt.xlim(pd.Timestamp('2017-01-01 00:00:00'), pd.Timestamp('2017-01-31 23:54:00')) 
+plt.ylabel('Altura de marea [m]')
+plt.xlabel('Día')
+plt.title('Marea en Monterey, CA,  durante Enero 2017')
+plt.grid(True)
+
+fig = plt.gcf()
+fig.set_size_inches(20, 8)
+plt.show()
+\end{verbatim}
+
+En ocasiones se deben de hacer cambios en otros formatos ya que algunos datos no son leídos en el formato correcto, por ejemplo para las alturas puede que pandas lo lea inicialmente como objeto en lugar de un formato de número real, para hacer este cambio se debe de usar el comando \verb# pd.to_numeric(arg, errors='coerce)#, en donde arg representa el valor (o valores) que se cambian a un formato de número, por ejemplo: \verb#df_cl.Altura = pd.to_numeric(df_cl.Altura, errors='coerce')#.
+\newpage
+\bibliographystyle{IEEEtran}
+\bibliography{referencias}
+\end{document}
