@@ -1,0 +1,373 @@
+\include{preamble}
+\date{23 de abril de 2017}
+\begin{document}
+
+\begin{titlepage}
+
+    \begin{figure}[ht!]
+    \centering
+    \includegraphics[scale = 0.25]{logo}
+    
+    \textbf{UNIVERSIDAD DE SONORA \\ DIVISIÓN DE CIENCIAS EXACTAS Y NATURALES \\ DEPARTAMENTO DE FÍSICA \\ LICENCIATURA EN FÍSICA}
+	\maketitle
+    \hrule \bigskip
+    \large{Física Computacional I}\\
+	Profr. Carlos Lizárraga Celaya
+    \end{figure}
+\thispagestyle{empty}
+
+\end{titlepage}
+
+\newpage
+
+\begin{center}
+\huge{\textbf{\textsc{Análisis armónico de las mareas}}}
+\end{center}
+\noindent  Para el estudio de las mareas existen modelos que ayudan a analizar y hacer predicciones sobre los fenómenos de las mareas. El modelo más utilizado, incluso en nuestros días, ha sido el que utiliza un análisis armónico de las mareas a partir de un análisis de Fourier. 
+
+La transformada de fourier nos devuelve el valor de las amplitudes asociadas a funciones de onda, las cuales tienen una frecuencia específica, que también es obtenida a partir del análisis de Fourier.
+
+En esta práctica se elaboró un análisis armónico de las mareas a partir de la transformada de Fourier utilizando el paquete \textsf{fftpack} de la biblioteca textsf{SciPi} de \textsf{python}. Con esto obtendremos las componentes principales de las mareas que se presentan en las regiones de El Sauzal, Ensenada, B.C., México y  Monetrey, CA., EE. UU., a partir de los datos obtenidos de sus correspondientes estaciones, que pueden obtenerse desde las páginas web de CICESE (Centro de Investigación Científica y de Educación Superior de Ensenada, \url{http://predmar.cicese.mx/calendarios})
+y CO-OPS de la NOAA (Administración Nacional Oceánica y Atmosférica, \url{https://tidesandcurrents.noaa.gov/})
+
+\section{Transformada de Fourier}
+La transformada de Fourier descompone una función que depende del tiempo en una función de frecuencias que generan a la función. Las series de Fourier son una forma de representar una función de tipo aondulatorio como la suma de funciones oscilatorias de senos y cosenos.
+
+Una onda como las que estudiamos en las mareas son el producto de la superposición de ondas son funciones de senos y cosenos con una amplitud de onda  del tipo:
+
+\begin{equation}
+S_N(t) = \frac{A_0}{2} + \sum_{n=1}^{N} A_n\cdot\sin{(\frac{2\pi n t}{P}+ \phi_n)}
+\label{wave}
+\end{equation}
+$$= \frac{a_0}{2} + \sum_{n=1}^{N} \left(A_n\sin{(\phi_n)}\cos{(\frac{2 \pi n}{P})} +  A_n\cos{(\phi_n)}\cdot\sin{(\frac{2\pi n t}{P})} \right)$$
+$$=\frac{a_0}{2} + \sum_{n=1}^{N} \left( a_n\cos{(\frac{2 \pi n}{P})} +  b_n\cdot\sin{(\frac{2\pi n t}{P})} \right)$$
+
+
+Donde $A_0/2$ es el valor medio en el cual se presenta la onda, en nuestro caso es el nivel del mar promedio de la región estudiad, t es el tiempo y P es el periodo en el cual se presenta la onda.
+
+Al aplicar la transformada de Fourier a nuestros datos, se obtendrá una función en términos de la frecuencia de las ondas, en lugar del tiempo. Para nuestra función se obtendría lo siguiente.
+
+$$S_N(t) =  \frac{a_0}{2} + \sum_{n=1}^{N} \left( A_n\cos{(\phi_n)}\cdot\sin{(\frac{2\pi n t}{P})} + A_n\sin{(\phi_n)}\cos{(\frac{2 \pi n}{P})} \right)$$
+
+\begin{equation}
+S_N =\sum_{n=-N}^{N} c_n \cdot e^{i \frac{2\pi n x}{P}}
+\end{equation}
+Donde
+\[ 
+c_n = \left\{
+  \begin{tabular}{ll}
+  $\frac{A_n}{2i}e^{\phi_n} = \frac{1}{2} (a_n)- ib_n) $ & $ n >0$ \\
+  $\frac{1}{2} A_0 = \frac{1}{2}a_0 $ & $ n=0 $\\
+  $c_{|n|}^{*} $ & $ n<0 $ \\ 
+  \end{tabular}
+  \right.
+\]
+
+Y la relación inversa de estas expresiones son:
+
+$$A_{n}={\sqrt{a_{n}^{2}+b_{n}^{2}}}\quad \phi_{n}=\arctan\left(\frac{a_{n}}{b_{n}}\right)$$
+
+\section{Análisis armónico de Fourier a los datos obtenidos de las mareas}
+A los datos obtenidos de las estaciones de El Sauzal, Ensenada, B.C y Monterey, CA. Para ello se hace uso de los paquetes \textsf{fft, fftfreq, fftshift} de \textsf{SciPy}. Con ellos se obtendrán las amplitudes de las ondas que generan las mareas en estas regiones.\footnote{Los datos descargados son de registros obtenidos cada hora para ambas estaciones.}
+
+Primero se deben de leer los datos obtenidos, añadir un formato de fecha a la columna o columnas de la fecha que viene incluida en el registro de datos descargado. Luego de hacer esto se debe de elegir el rango de fechas con el que se va a trabajar y así tener un nuevo conjunto de datos. \footnote{\footnotesize el caso de los datos descargados del CICESE se debe tener en cuenta que la altura de la marea se encuentra dado en mm y en algunos casos se debe de cambiar el formato con el que se lee a uno numérico, pues en ocasiones es interpretada esta información con otros formatos.}
+
+
+\begin{verbatim}
+#datos de Monterey, CA.
+
+df_hr= pd.read_csv("Mtry_CA_hr.csv", names = ("Date Time", 
+"Water Level", "Sigma", "I", "L"), header = 0)
+
+df_hr["Date Time"]= pd.to_datetime(df_hr["Date Time"], 
+format = '%Y %m %d %H:%M:')
+
+#Los datos de Moneterey fueron descargados en un rango de fechas 
+deseados para no tener problemas seleccionando a partir de comandos
+
+#Datos de El Sauzal, Ensenada
+
+datos= pd.read_csv("szl_data.csv", names = ("Anio", "Mes", 
+"dia", "Hora", "Altura" ), header = 0)
+
+df = datos.dropna()
+
+df['date']= df.apply(lambda x:datetime.strptime("{0} {1} {2}{3}".
+format(x[u'Anio'],x[u'Mes'], x[u'dia'], x[u'Hora']), 
+"%Y %m %d %H"),axis=1)
+
+df['Altura'] =pd.to_numeric(df['Altura'], errors = 'coerse')
+
+df_ft = df[(df['date'] >= '2016-01-01 00:00:00') & 
+(df['date'] <=  '2016-03-31 23:00:00')]
+\end{verbatim}
+
+Una vez realizada la lectura y aplicar el formato correcto a nuestro conjunto de datos podemos proceder a utilizar los paquetes que realizaran el análisis de Fourier. El siguiente código es el utilizado para realizar esta operación.\footnote{\footnotesize Para encontrar el número de datos podemos fijarnos en el último dato de nuestro conjunto usando el comando  \textsf{df.tail()}. }
+
+\textbf{Para la marea registrada en El Sauzal, Ensenada, B.C.}
+\begin{verbatim}
+
+from scipy.fftpack import fft, fftfreq, fftshift
+import numpy as np
+# numero de datos
+N = 2184
+# Separación de tiempo entre cada medición
+T = 1.0
+#aplicacion de la transformada de fourier a los datos
+y = df_ft["Altura"]/1000
+yf = fft(y)
+
+ #Cambio de variable de tiempo a uno de frecuencias.
+xf = fftfreq(N, T)
+xf = fftshift(xf)
+
+# Conjunto de datos dados por la transformada de fourier para 
+graficar
+yplot = fftshift(yf)
+
+# Grafica de la transformada de fourier
+import matplotlib.pyplot as plt
+plt.plot(xf, 2.0/N *np.abs(yplot), 'b-')
+plt.xlim(-0.01, 0.15) 
+plt.grid(True)
+plt.xlabel('Frecuencia [1/hora]', fontsize=14)
+plt.ylabel('Amplitud [m]', fontsize=14)
+plt.title('Análisis armónico de la marea presentada en El Sauzal,
+Ensenada (Ene-Mar 2016)', fontsize=15)
+fig = plt.gcf()
+fig.set_size_inches(15, 8)
+plt.show()
+\end{verbatim}
+
+\textbf{Para el análisis de la marea registrada en Monterey, CA.}
+\begin{verbatim}
+from scipy.fftpack import fft, fftfreq, fftshift
+import numpy as np
+# numero de datos
+N_d = 2160
+# Separacion de tiempo entre cada medicion
+T_d = 1.0
+#aplicacion de la transformada de Fourier
+y_hr = df_hr["Water Level"] 
+yf_hr = fft(y_hr)
+
+#Cambio de variable de tiempo a uno de frecuencias.
+xf_hr = fftfreq(N_d, T_d)
+xf_hr = fftshift(xf_hr)
+
+# Conjunto de datos dados por la transformada de fourier para 
+graficar
+yplot_hr = fftshift(yf_hr)
+
+# Grafica de la transformada de fourier
+import matplotlib.pyplot as plt
+graf = plt.plot(xf_hr, 2.0/N_d *abs(yplot_hr), 'g-')
+plt.xlim(-0.01,0.1)
+plt.grid(True)
+
+plt.xlabel('Frecuencia [1/hora]', fontsize=14)
+plt.ylabel('Amplitud [m]', fontsize=14)
+plt.title('Análisis armónico de la marea presentada en Monterey, CA. (Dic 2016 -- Feb 2017)', fontsize=15)
+
+fig = plt.gcf()
+fig.set_size_inches(15, 8)
+plt.show()
+\end{verbatim}
+
+Con estas gráficas se pueden notar los nodos que se presentan, para ubicar la amplitud y la frecuencia de cada nodo encontrado se usará el siguiente código (en este caso se presenta el código usado para el Sauzal, pero se utiliza el mismo para Monterey, solo que \verb# N es N_d# y \verb# yf es yf_hr#).
+\begin{verbatim}
+a = 2*np.absolute(yf)/N 
+#N es el numero de datos dado al aplicar la transformada de Fourier
+a
+
+#ubicacion de las amplitudes
+print(np.where(a[:,]>0.045))
+b= a[a[:,]>0.045]
+print(b)
+\end{verbatim}
+En el código anterior se debe de hacer una observación de las alturas que se tienen que son mayores que 0.045 (estas alturas están en m) y relacionarlas con el numero del dato que es. Por ejemplo:
+\begin{verbatim}
+(array([   0,    6,    7,   83,   84,   90,   91,  170,  171,  173,  174,
+        180, 1980, 1986, 1987, 1989, 1990, 2069, 2070, 2076, 2077, 2153,
+       2154], dtype=int64),)
+Out[31]:
+array([ 1.8818037 ,  0.04730833,  0.04553544,  0.08048047,  0.15509528,
+        0.39609257,  0.08066617,  0.05127162,  0.10018642,  0.06123929,
+        0.49737202,  0.13258916,  0.13258916,  0.49737202,  0.06123929,
+        0.10018642,  0.05127162,  0.08066617,  0.39609257,  0.15509528,
+        0.08048047,  0.04553544,  0.04730833])
+\end{verbatim}
+En este caso se observa que el dato ubicado en el indice 84  del conjunto de amplitudes tiene el valor de 0.15509528.
+
+Con esto se pueden ubicar los nodos más notorios de cada tipo de marea según la clasificación de la NOAA, para producir una gráfica con los nodos especificados.
+
+Los siguientes códigos son los obtenidos para obtener las amplitudes, frecuencias y nodos:
+\begin{verbatim}
+#La 0 es la que se encuentra en el origen, pues es la altura media que se presenta para las mareas en Monterey
+print( 'Primer Armónico notorio')
+print('Amplitud=',2.0*np.absolute(yf[85,]/N))
+print('frecuencia=', xf[int(1092 +85),])
+print('periodo', 1/xf[int(1092 +85),])
+print()
+
+print('Segundo Armónico notorio')
+print('Amplitud=',2.0*np.absolute(yf[91,]/N))
+print('frecuencia=', xf[int(1092 +91),])
+print('periodo', 1/xf[int(1092 +91),])
+.
+.
+.
+\end{verbatim}
+
+Con los datos obtenidos de este se ubican estas amplitudes y frecuencias con los respectivos valores en la gráfica, además, con el periodo podemos ubicar los armónicos en la tabla consultada en el artículo de la teoría de las mareas\ de Wikipedia (\url{https://en.wikipedia.org/wiki/Theory_of_tides}. Con esto se puede etiquetar a los armónicos encontrados de acuerdo a las clasificaciones existentes, en este caso se usa el símbolo Darwin \cite{teotide}. El siguiente código es para producir la gráfica con las clasificaciones de los armónicos que producen las mareas registradas en El Sauzal y Monterey.
+
+\textbf{Para El Sauzal se tiene:}
+\begin{verbatim}
+fig = plt.gcf()
+fig.set_size_inches(15, 8)
+
+plt.plot(xf, 2.0/N *np.abs(yplot), 'b-')
+plt.xlim(-0.01, 0.10) 
+plt.grid(True)
+plt.xlabel('Frecuencia [1/hora]', fontsize=14)
+plt.ylabel('Amplitud [m]', fontsize=14)
+plt.title('Análisis armónico de la marea presentada en
+El Sauzal, Ensenada (Ene-Mar 2016)', fontsize=15)
+
+plt.text(0, 2*0.787375, '$A_0$')
+plt.text(0.0389194139194, 0.122326127235, '$O_1$')
+plt.text(0.0416666666667, 0.244236410756, '$S_1$')
+plt.text(0.077, 0.0983332612722, '$N_2$')
+plt.text(0.0805860805861, 0.465781162577, '$M_2$')
+plt.text(0.0833333333333, 0.108340186303, '$S_2$')
+
+plt.text(0.040, 0.0927277029147, '$P_1$')
+plt.text(0.038, 0.0840783278453, r'$\rho$')
+plt.text(0.081043956044, 0.216680372606, r'$\lambda_2$')
+
+plt.show()
+\end{verbatim}
+
+\textbf{Para Monterey se tiene:}
+\begin{verbatim}
+fig = plt.gcf()
+fig.set_size_inches(15, 8)
+
+graf = plt.plot(xf_hr, 2.0/N_d *abs(yplot_hr), 'g-')
+plt.xlim(-0.01,0.1)
+plt.grid(True)
+
+plt.xlabel('Frecuencia [1/hora]', fontsize=14)
+plt.ylabel('Amplitud [m]', fontsize=14)
+plt.title('Análisis armónico de la marea presentada en 
+Monterey, CA. (Dic 2016 -- Feb 2017)', fontsize=15)
+
+#Clasificaciones
+plt.text(0.0388888888889, 0.155095284116, '$O_1$')
+plt.text(0.0416666666667, 0.39609256604, '$S_1$')
+plt.text(0.078, 0.100186416234, '$N_2$')
+plt.text(0.0805555555556, 0.497372020197, '$M_2$')
+plt.text(0.0833333333333, 0.132589160654, '$S_2$')
+plt.text(0, 2*0.940901851852, '$2 A_0$')
+
+plt.text(0.00277777777778, 0.0473083259917, '$M_sf$')
+plt.text(0.037, 0.0804804706408, r'$\rho$')
+plt.text(0.075, 0.0512716160607, '$MU_2$')
+plt.show()
+\end{verbatim}
+
+\newpage
+\section{Resultados}
+De acuerdo al análisis realizado se tiene la siguiente información sobre las componentes más notorias de las mareas registradas en El Sauzal, Ensenada, B.C. y en Monterey, CA. Los armónicos fueron clasificados de acuerdo al valor del periodo que más se aproximaba al que es conocido para los tipos de mareas conocidos.
+
+\begin{table}[ht!]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{4}{|c|}{\textbf{Tabla de armónicos más notorios en las mareas de El Sauzal, Ensenda, B.C}} \\ \hline
+\textbf{Clasifiación} & \textbf{Amplitud [m]} & \textbf{Frecuencia [$\frac{1}{h}$]} & \textbf{Periodo [$\frac{1}{h}$]} \\ \hline
+$O_1$ & 0.122326127235 & 0.0389194139194 & 25.6941176471 \\ \hline
+$\S_1$ & 0.244236410756 & 0.0416666666667 & 24.0 \\ \hline
+$N_2$ & 0.0983332612722 & 0.0792124542125 & 12.6242774566 \\ \hline
+$M_2$ & 0.465781162577 & 0.0805860805861 & 12.4090909091 \\ \hline
+$S_2$ & 0.216680372606 & 0.0833333333333 & 12.0 \\ \hline
+$\rho$ & 0.0840783278453 & 0.0384615384615 & 26.0 \\ \hline
+$P_1$ & 0.0927277029147 & 0.0421245421245 & 23.7391304348 \\ \hline
+$\lambda_2$ & 0.0600730646089 & 0.081043956044 & 12.3389830508 \\ \hline
+\end{tabular}%
+}
+\caption{Tabla de los componentes armónicos de la marea encontrado a partir de un análisis de Fourier}
+\label{tabens}
+\end{table}
+
+\begin{table}[ht!]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{4}{|c|}{\textbf{Tabla de armónicos más notorios en las mareas de Monterey, CA.}} \\ \hline
+\textbf{Clasifiación} & \textbf{Amplitud [m]} & \textbf{Frecuencia [$\frac{1}{h}$]} & \textbf{Periodo [$\frac{1}{h}$]} \\ \hline
+$O_1$ & 0.155095284116 & 0.0388888888889 & 25.7142857143 \\ \hline
+$\S_1$ & 0.39609256604 & 0.0416666666667 & 24.0 \\ \hline
+$N_2$ & 0.100186416234 & 0.0791666666667 & 12.6315789474 \\ \hline
+$M_2$ & 0.497372020197 & 0.0805555555556 & 12.4137931034 \\ \hline
+$S_2$ & 0.132589160654 & 0.0833333333333 & 12.0 \\ \hline
+$M_{sf}$ & 0.0473083259917 & 0.00277777777778 & 360.0 \\ \hline
+$\rho$ & 0.0804804706408 & 0.0384259259259 & 26.0240963855 \\ \hline
+$MU_2$ & 0.0512716160607 & 0.0787037037037 & 12.7058823529 \\ \hline
+\end{tabular}%
+}
+\caption{abla de los componentes armónicos de la marea encontrado a partir de un análisis de Fourier}
+\label{tabmty}
+\end{table}
+
+La altura media que se tiene en cada región es:
+\begin{description}
+\item [El Sauzal, Ensenada:] $A_0 =0.787375 m$
+\item [Monterey:] $A_0 = 0.940901851852 m$
+\end{description}
+\newpage
+\subsection{Gráficas obtenidas}
+Gráficas obtenidas antes de la clasificación de las mareas
+\begin{figure}[ht!]
+\centering
+\includegraphics[width= 1 \textwidth]{s1}
+\caption{Gráfica obtenida de la transformada de Fourier para los datos de El Sauzal}
+\label{s1}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width= 1 \textwidth]{m1}
+\caption{Gráfica obtenida de la transformada de Fourier para los datos de Monterey}
+\label{m1}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width= 1 \textwidth]{sauzal}
+\caption{Gráfica obtenida de la transformada de Fourier, con las clasificaciones de los armónicos para los datos de El Sauzal}
+\label{szlgfc}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width= 1 \textwidth]{Monterey}
+\caption{Gráfica obtenida de la transformada de Fourier, con las clasificaciones de los armónicos para los datos de Monterey}
+\label{mtygfc}
+\end{figure}
+
+\newpage
+\section{Conclusiones}
+En esta actividad hemos hecho uso de una herramienta matemática para conocer más sobre el fenómeno observado de las mareas presentadas en dos sitios. Con los resultados obtenidos de esta práctica podemos conocer más sobre las características de las mareas en las zonas y también, a partir de los datos lograr reconstruir la marea que se presenta en estas regiones. 
+
+En nuestros resultados se puede ver que hay discrepancias entre las frecuencias que se presentan para los mismos tipos de mareas o bien en los periodos, que son los que deberían ser más parecidos, sin embargo esto se da porque cada región tiene su propia forma de las líneas costeras y la batimetría de las costas, entre otros factores.
+
+\newpage
+\nocite{mareas}
+\nocite{noaa}
+\nocite{cicese}
+\bibliographystyle{IEEEtran}
+\bibliography{referencias}
+\end{document}
