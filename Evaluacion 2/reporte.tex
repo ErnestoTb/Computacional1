@@ -1,0 +1,160 @@
+\include{preamble}
+\date{26 de abril de 2017}
+\begin{document}
+
+\begin{titlepage}
+
+    \begin{figure}[ht!]
+    \centering
+    \includegraphics[scale = 0.25]{logo}
+    
+    \textbf{UNIVERSIDAD DE SONORA \\ DIVISIÓN DE CIENCIAS EXACTAS Y NATURALES \\ DEPARTAMENTO DE FÍSICA \\ LICENCIATURA EN FÍSICA}
+	\maketitle
+    \hrule \bigskip
+    \large{Física Computacional I}\\
+	Profr. Carlos Lizárraga Celaya
+    \end{figure}
+\thispagestyle{empty}
+
+\end{titlepage}
+
+\newpage
+
+\begin{center}
+\huge{\textbf{\textsc{Ciclo solar}}}
+\end{center}
+¿Encuentras un solo ciclo principal o un conjunto de ciclos con frecuencia cercana? ¿Cuál sería el promedio del conjunto de frecuencias?
+¿Que otros ciclos relevantes encuentras? Proporciona una tabla con las amplitudes de los ciclos. 
+Lo que han encontrado hasta ahora son ciertas regularidades, incluso hay pronósticos de un rango para el número de manchas solares. ¿Cómo crees que es posible predecir el número de manchas?
+\noindent En esta evaluación hemos trabajado con la transformada de Fourier para analizar datos sobre las manchas solares y los ciclos en los cuales hay mayor cantidad de estas debido a la actividad solar. Se sabe que los ciclos solares tienen una duración aproximada de 11.6 años, este para el ciclo 24.
+
+\textbf{De los datos proporcionados, utiliza una transformada discreta de Fourier, para encontrar la frecuencia del ciclo principal. Muestra una gráfica con los principales modos encontrados.}
+Al analizar los datos descargados del promedio de manchas solares con el siguiente código se encontró la gráfica \ref{fsol1}:
+\begin{verbatim}
+import pandas as pd
+import numpy as np
+
+df = pd.read_table('promsol.txt', delim_whitespace = 2, names= ("Año", "mes", "mes-año", "PromSol", "I", "O"), header = int(0)) 
+
+#Transformada de Fourier para datos 
+from scipy.fftpack import fft, fftfreq, fftshift
+import numpy as np
+# number of points
+N = 3213
+# sample spacing
+T = 1.0
+y = df['PromSol']
+yf = fft(y)
+xf = fftfreq(N, T)
+xf = fftshift(xf)
+yplot = fftshift(yf)
+
+#grafica de lo obtenido con la transformada de Fourier
+import matplotlib.pyplot as plt
+graf = plt.plot(xf, 2.0/N*abs(yplot), 'g-')
+plt.xlim(-0.001,0.02)
+plt.grid(True)
+
+plt.xlabel('Frecuencia [1/meses]', fontsize=14)
+plt.ylabel('Promedio de manchas solares', fontsize=14)
+plt.title('Transformada de Fourier para los datos de manchas solares', fontsize=15)
+
+fig = plt.gcf()
+fig.set_size_inches(20, 18)
+plt.show()
+\end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics[width= 1 \textwidth]{four1}
+\caption{Gráfica obtenida de la transformada de Fourier aplicada a los datos de manchas solares promedio por mes del total de datos descargados}
+\label{fsol1}
+\end{figure}
+
+Como se ve en la gráfica los datos se ubican de acuerdo al inverso del número de meses por año que le toma a los ciclos solares, por eso son frecuencias pequeñas. Con la gráfica tambien se puede ver que hay un conjunto de valores, alrededor de 3 picos, que representan el valor principal, por lo que se ocupará el promedio de ellos.
+
+Para ubicar estos picos de acuerdo a su altura se hace lo siguiente:
+\begin{verbatim}
+a = 2*np.absolute(yf)/N
+a
+print(np.where(a[:,]>15.0))
+b= a[a[:,]> 15.0]
+b
+\end{verbatim}
+Con esto se encuentra lo siguiente:
+
+\begin{verbatim}
+(array([   0,    3,    4,   23,   24,   25,   27, 3186, 3188, 3189, 3190,
+       3209, 3210], dtype=int64),)
+Out[17]:
+array([ 165.84712107,   22.79918361,   15.28281214,   22.67815211,
+         39.98723321,   35.419832  ,   30.90803788,   30.90803788,
+         35.419832  ,   39.98723321,   22.67815211,   15.28281214,
+         22.79918361])
+\end{verbatim}
+Donde el primer arreglo es el índice del dato (dónde se ubica en el conjunto de datos). De aquí se obtienen los indices en los cuales se encuentran los modos principales al relacionarlo con las amplitudes mostradas en el segundo conjunto hasta que estos comienzan a ser simétricos (que se encuentran en el lado negativo del eje horizontal la transformada de Fourier), los cuales tienen asociado una frecuencia y de aquí se obtendrá el ciclo por años. Considerando la gráfica \ref{fsol1} podemos decir que hay alrededor del ciclo solar 24, que sucede con un promedio de 11.6 años, tres datos ubicados que son el dato 23, 24 y 25, también consideremos analizar el dato 27, 3 y 4
+
+\begin{verbatim}
+#La 0 es el número de manchas promedio
+print('Primer modo principal')
+print('Amplitud=',2.0*np.absolute(yf[23,]/N))
+print('frecuencia=', xf[int(N/2 +23),])
+print('periodo en meses=', 1/xf[int(N/2 +23),])
+print('periodo en años=', 1/xf[int(N/2 +23),]*1/12)
+print()
+.
+.
+.
+\end{verbatim}
+Con estos datos se ubican los siguientes datos:
+\begin{verbatim}
+Primer modo principal
+Amplitud= 22.6781521056
+frecuencia= 0.00715841892312
+periodo en meses= 139.695652174
+periodo en años= 11.6413043478
+
+Segundo modo principal
+Amplitud= 39.9872332086
+frecuencia= 0.00746965452848
+periodo en meses 133.875
+periodo en años= 11.15625
+
+Tercero modo principal
+Amplitud= 35.4198320032
+frecuencia= 0.00778089013383
+periodo en meses 128.52
+periodo en años= 10.71
+\end{verbatim}
+
+De estos datos que más se aproximan al ciclo principal podemos sacar el promedio, el cual resulta:
+$$Ciclo_{prom} = 11.169184782608696$$
+Este ciclo está en años.
+\begin{figure}
+\centering
+\includegraphics[width= 1 \textwidth]{etiqueta}
+\caption{Gráfica con las frecuencias y amplitudes principales encontrados (Para el ciclo 24).}
+\end{figure}
+
+\textbf{Tabla de modos importantes encontrados}
+\begin{table}[ht!]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|}
+\hline
+\multicolumn{3}{|c|}{\textbf{Tabla de modos encontrados}} \\ \hline
+\textbf{Amplitud} & \textbf{Frecuencia [$\frac{1}{mes}$]} & \textbf{Ciclo [años]} \\ \hline
+22.6781521056 & 0.00715841892312 & 11.6413043478 \\ \hline
+39.9872332086 & 0.00746965452848 & 11.15625 \\ \hline
+35.4198320032 & 0.00778089013383 & 10.71 \\ \hline
+30.9080378809 & 0.00840336134454 & 9.91666666667 \\ \hline
+22.7991836131 & 0.00093370681606 & 89.25 \\ \hline
+15.2828121366 & 0.00124494242141 & 66.9375 \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+\textbf{Conclusiones}
+
+Con los resultados obtenidos aplicando la transformada de Fourier podemos hacer un modelo que prediga el comportamiento de los ciclos solares de acuerdo al promedio de manchas solares encontradas. Tal como hicimos en la actividad 7 para reconstruir mareas y crear un modelo que las aproxime, considerando ciertos modos encontrados para los ciclos solares se puede crear una serie de senos o cosenos que estén relacionados con las amplitudes encontradas en la transformada de Fourier, sus fases y frecuencias, con esto se puede producir un modelo dependiente del tiempo que prediga tanto en años como en meses la cantidad de manchas solares promedio que se presenten.
+\end{document}
